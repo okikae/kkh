@@ -1,7 +1,7 @@
 @CHARSET "utf-8";
 
 body {
-    font-family: "Hiragino Maru Gothic ProN", Osaka, sans-serif;
+    /* font-family: "Hiragino Maru Gothic ProN", Osaka, sans-serif; */
     max-width: 960px;
 }
 
@@ -29,7 +29,7 @@ div.button-pair {
 }
 
 textarea {
-    font-family: "Hiragino Maru Gothic ProN", Osaka, sans-serif;
+    /* font-family: "Hiragino Maru Gothic ProN", Osaka, sans-serif; */
     font-size: 1.1rem;
     border: 2px solid lightgray;
     border-radius: 0.5rem 0.5rem;
@@ -59,7 +59,7 @@ div.set {
 }
 
 input {
-    font-family: "Hiragino Maru Gothic ProN", Osaka, sans-serif;
+    /* font-family: "Hiragino Maru Gothic ProN", Osaka, sans-serif; */
     font-size: 0.9rem;
     border: 1px solid darkgray;
     border-radius: 0.5rem 0.5rem;
@@ -69,5 +69,6 @@ input {
 
 input.bg_oldnew {background: lightgreen;}
 input.bg_newold {background: lightpink;}
+input.bg_deprecated {background: lightgray;}
 
 a {text-decoration: none;}

@@ -3,14 +3,20 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="変換辞書を説明するのためのサンプルページ。歴史的仮名遣い⇔現代仮名遣い、旧字体⇔新字体、旧字旧仮名⇔新字新仮名の変換ができます。" />
+    <meta name="description" content="歴史的仮名遣い⇔現代仮名遣い、旧字体⇔新字体、旧字旧仮名⇔新字新仮名の変換ができます。" />
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="kkh.js"></script>
-    <title>サンプルページ</title>
+    <title>仮名遣いと漢字を置き換えます</title>
   </head>
   <body>
-    <script src="dic-kana.js"></script>
-    <script src="dic-kanji.js"></script>
+    <script src="dic-to-modern-kana.js"></script>
+    <script src="dic-to-trad-kana.js"></script>
+    <script src="dic-to-new-kanji.js"></script>
+    <script src="dic-to-old-kanji.js"></script>
+    <script src="dic-odori-enhance.js"></script>
+    <script src="dic-gairai-enhance.js"></script>
+    <script src="dic-gouryaku-enhance.js"></script>
+    <script src="dic-ye-enhance.js"></script>
 
     <noscript>
       <p>JavaScriptを有効にしないと使えません(&gt;_&lt;)</p>
@@ -35,11 +41,11 @@
           <input type="button"
                  value="旧文章→新文章"
                  class="bg_oldnew"
-                 onclick="replaceStrings2(kanjiArray, kanaArray, 1)" />
+                 onclick="replaceStrings2(toNewKanjiArray, toModernKanaArray, 0)" />
           <input type="button"
                  value="新文章→旧文章"
                  class="bg_newold"
-                 onclick="replaceStrings2(kanaArray, kanjiArray, 0)" />
+                 onclick="replaceStrings2(toTradKanaArray, toOldKanjiArray, 0)" />
         </div>
       </div>
 
@@ -51,11 +57,11 @@
           <input type="button"
                  value="旧かな→新かな"
                  class="bg_oldnew"
-                 onclick="replaceStrings(kanaArray, 1)" />
+                 onclick="replaceStrings(toModernKanaArray, 0)" />
           <input type="button"
                  value="新かな→旧かな"
                  class="bg_newold"
-                 onclick="replaceStrings(kanaArray, 0)" />
+                 onclick="replaceStrings(toTradKanaArray, 0)" />
         </div>
       </div>
 
@@ -67,26 +73,95 @@
           <input type="button"
                  value="旧字体→新字体"
                  class="bg_oldnew"
-                 onclick="replaceStrings(kanjiArray, 1)" />
+                 onclick="replaceStrings(toNewKanjiArray, 0)" />
           <input type="button"
                  value="新字体→旧字体"
                  class="bg_newold"
-                 onclick="replaceStrings(kanjiArray, 0)" />
+                 onclick="replaceStrings(toOldKanjiArray, 0)" />
         </div>
       </div>
 
       <br class="clear" />
 
       <div class="button-set">
-        <input type="checkbox" id="del_IVS_yes" />
-        <label for="del_IVS_yes">異体字セレクタを削除する</label></div>
+        ファイルから読込む：
+        <input type="file" id="ifile">
+        <script>readFileInLocal();</script>
+      </div>
 
       <br class="clear" />
 
       <div class="button-set">
-        ファイルから読込む：
-        <input type="file" id="ifile">
-        <script>readFileInLocal();</script></div>
+        <div>
+          変換後の文章をローカルに：
+          <button type="button" id="ofile">保存する</button>
+          <script>saveAfterStrings();</script>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="button-set">
+        拡張変換:
+        <div class="button-pair">
+          <input type="button"
+                 value="(旧かなの)踊り字が使われた文を現代表記へ"
+                 class="bg_oldnew"
+                 onclick="replaceStrings(odoriEnhanceArray, 1)" />
+          <input type="button"
+                 value="現代表記を(旧かなの)踊り字を使う文へ"
+                 class="bg_newold"
+                 onclick="replaceStrings(odoriEnhanceArray, 0)" />
+        </div>
+      </div>
+
+      <br class="clear" />
+
+      <div class="button-set">
+        拡張変換:
+        <div class="button-pair">
+          <input type="button"
+                 value="昔風のカタカナを今風に"
+                 class="bg_oldnew"
+                 onclick="replaceStrings(gairaiEnhanceArray, 1)" />
+          <input type="button"
+                 value="カタカナ表記を昔風に"
+                 class="bg_deprecated"
+                 onclick="replaceStrings(gairaiEnhanceArray, 0)" />
+        </div>
+      </div>
+
+      <br class="clear" />
+
+      <div class="button-set">
+        拡張変換:
+        <div class="button-pair">
+          <input type="button"
+                 value="合略仮名が使われた文を現代表記へ"
+                 class="bg_oldnew"
+                 onclick="replaceStrings(gouryakuEnhanceArray, 1)" />
+          <input type="button"
+                 value="現代表記を合略仮名を使う文へ"
+                 class="bg_deprecated"
+                 onclick="replaceStrings(gouryakuEnhanceArray, 0)" />
+        </div>
+      </div>
+
+      <br class="clear" />
+
+      <div class="button-set">
+        拡張変換:
+        <div class="button-pair">
+          <input type="button"
+                 value="ヤ行エが使われた文を現代表記へ"
+                 class="bg_oldnew"
+                 onclick="replaceStrings(yeEnhanceArray, 1)" />
+          <input type="button"
+                 value="現代表記をヤ行エを使う文へ"
+                 class="bg_deprecated"
+                 onclick="replaceStrings(yeEnhanceArray, 0)" />
+        </div>
+      </div>
 
     </form>
 

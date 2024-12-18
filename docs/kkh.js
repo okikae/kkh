@@ -1,6 +1,6 @@
 // Author: nakinor
 // Created: 2014-04-06
-// Revised: 2024-12-01
+// Revised: 2024-12-15
 
 function gsub(str, key, val) {
   return str.split(key).join(val);
@@ -17,33 +17,21 @@ function toBeforeTextArea() {
     document.kkh.aft.value = "";
 }
 
-function deleteIVS(str) {
-    var vs_re = /%F3%A0%84%8[0-9|A-F]/;
-    var enc_str = encodeURIComponent(str);
-    var novs_str = gsub(enc_str, vs_re, "");
-    var dec_str = decodeURIComponent(novs_str);
-    return dec_str;
-}
-
 function replaceStrings2(jisyo1, jisyo2, flag) {
     var str = document.kkh.bef.value;
-    var del_ivs = document.forms.kkh.del_IVS_yes.checked
-    if (del_ivs == true) {
-        str = deleteIVS(str);
-    }
     if (flag == 0) {
         for (var i = 0; i < jisyo1.length; i++) {
-            str = gsub(str, jisyo1[i][0], jisyo1[i][1]);
+            str = str.replaceAll(jisyo1[i][0], jisyo1[i][1]);
         }
         for (var i = 0; i < jisyo2.length; i++) {
-            str = gsub(str, jisyo2[i][0], jisyo2[i][1]);
+            str = str.replaceAll(jisyo2[i][0], jisyo2[i][1]);
         }
     } else if (flag == 1) {
         for (var i = 0; i < jisyo1.length; i++) {
-            str = gsub(str, jisyo1[i][1], jisyo1[i][0]);
+            str = str.replaceAll(jisyo1[i][1], jisyo1[i][0]);
         }
         for (var i = 0; i < jisyo2.length; i++) {
-            str = gsub(str, jisyo2[i][1], jisyo2[i][0]);
+            str = str.replaceAll(jisyo2[i][1], jisyo2[i][0]);
         }
     }
     document.kkh.aft.value = str;
@@ -51,27 +39,30 @@ function replaceStrings2(jisyo1, jisyo2, flag) {
 
 function replaceStrings(jisyo, flag) {
     var str = document.kkh.bef.value;
-    var del_ivs = document.forms.kkh.del_IVS_yes.checked
-    if (del_ivs == true) {
-        str = deleteIVS(str);
-    }
     if (flag == 0) {
         for (var i = 0; i < jisyo.length; i++) {
-            str = gsub(str, jisyo[i][0], jisyo[i][1]);
+            str = str.replaceAll(jisyo[i][0], jisyo[i][1]);
         }
     } else if (flag == 1) {
         for (var i = 0; i < jisyo.length; i++) {
-            str = gsub(str, jisyo[i][1], jisyo[i][0]);
+            str = str.replaceAll(jisyo[i][1], jisyo[i][0]);
         }
     }
     document.kkh.aft.value = str;
 }
 
 function dictElements() {
-    var total = kanaArray.length + kanjiArray.length;
-    document.write("<p>現時点での辞書の要素数は " + total +
-                   "（かな変換用:" + kanaArray.length +
-                   " 漢字変換用:" + kanjiArray.length + "）</p>");
+    document.write(
+        "<p>現時点での辞書の要素数は<br />" +
+            "（かな: 旧→新: " + toModernKanaArray.length +
+            "、新→旧: " + toTradKanaArray.length + "）<br />" +
+            "（漢字: 旧→新: " + toNewKanjiArray.length +
+            "、新→旧: " + toOldKanjiArray.length + "）<br />" +
+            "（拡張: 踊り字: " + odoriEnhanceArray.length + "）" +
+            "（拡張: 外来語: " + gairaiEnhanceArray.length + "）<br />" +
+            "（拡張: 合略仮名: " + gouryakuEnhanceArray.length + "）" +
+            "（拡張: ヤ行エ: " + yeEnhanceArray.length + "）</p>"
+    );
 }
 
 function readFileInLocal() {
@@ -87,6 +78,22 @@ function readFileInLocal() {
                           false);
 }
 
+function saveAfterStrings() {
+    document.getElementById("ofile")
+        .addEventListener(
+            "click",
+            function () {
+                var Stfings = document.kkh.aft.value;
+                var blob = new Blob([Stfings], { type: "text/plain" });
+                var dlAnchor = document.createElement("a");
+                dlAnchor.href = URL.createObjectURL(blob);
+                dlAnchor.download = "replaced.txt";
+                dlAnchor.click();
+                URL.revokeObjectURL(dlAnchor.href);
+            },
+            false);
+}
+
 // for mobile page
 function mDel() {
     document.kkh.tArea.value = "";
@@ -94,23 +101,19 @@ function mDel() {
 
 function mReplaceStrings2(jisyo1, jisyo2, flag) {
     var str = document.kkh.tArea.value;
-    var del_ivs = document.forms.kkh.del_IVS_yes.checked
-    if (del_ivs == true) {
-        str = deleteIVS(str);
-    }
     if (flag == 0) {
         for (var i = 0; i < jisyo1.length; i++) {
-            str = gsub(str, jisyo1[i][0], jisyo1[i][1]);
+            str = str.replaceAll(jisyo1[i][0], jisyo1[i][1]);
         }
         for (var i = 0; i < jisyo2.length; i++) {
-            str = gsub(str, jisyo2[i][0], jisyo2[i][1]);
+            str = str.replaceAll(jisyo2[i][0], jisyo2[i][1]);
         }
     } else if (flag == 1) {
         for (var i = 0; i < jisyo1.length; i++) {
-            str = gsub(str, jisyo1[i][1], jisyo1[i][0]);
+            str = str.replaceAll(jisyo1[i][1], jisyo1[i][0]);
         }
         for (var i = 0; i < jisyo2.length; i++) {
-            str = gsub(str, jisyo2[i][1], jisyo2[i][0]);
+            str = str.replaceAll(jisyo2[i][1], jisyo2[i][0]);
         }
     }
     document.kkh.tArea.value = str;
