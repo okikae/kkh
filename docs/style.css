@@ -72,3 +72,5 @@ input.bg_newold {background: lightpink;}
 input.bg_deprecated {background: lightgray;}
 
 a {text-decoration: none;}
+
+div.warn {text-align: center; font-size: 1.5rem; color: red;}
