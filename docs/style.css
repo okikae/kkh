@@ -29,7 +29,7 @@ div.button-pair {
 }
 
 textarea {
-    font-family: "Hiragino Maru Gothic ProN", Osaka, sans-serif;
+    font-family: "Hiragino Maru Gothic ProN", Osaka, sans-serif, Jigmo2;
     font-size: 1.1rem;
     border: 2px solid lightgray;
     border-radius: 0.5rem 0.5rem;
@@ -69,5 +69,6 @@ input {
 
 input.bg_oldnew {background: lightgreen;}
 input.bg_newold {background: lightpink;}
+input.bg_yomikana{background:lightblue;}/*読み仮名用ボタンの色の追加 */
 
 a {text-decoration: none;}
