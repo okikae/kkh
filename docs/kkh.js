@@ -1,6 +1,7 @@
 // Author: nakinor
 // Created: 2014-04-06
-// Revised: 2017-07-02
+// Revised: 2024-12-01
+//2025-07-30 kkh-Ver.2.0.0拗促音を小書きにする設定の追加。読み仮名変換、IVS削除変換の機能追加。
 
 function gsub(str, key, val) {
   return str.split(key).join(val);
@@ -8,13 +9,13 @@ function gsub(str, key, val) {
 
 // for pc page
 function del() {
-    document.mto.bef.value = "";
+    document.kkh.bef.value = "";
 }
 
 function toBeforeTextArea() {
-    var str = document.mto.aft.value;
-    document.mto.bef.value = str;
-    document.mto.aft.value = "";
+    var str = document.kkh.aft.value;
+    document.kkh.bef.value = str;
+    document.kkh.aft.value = "";
 }
 
 function deleteIVS(str) {
@@ -26,13 +27,13 @@ function deleteIVS(str) {
 }
 
 function deleteIVS2(){
-    var str = document.mto.bef.value;
+    var str = document.kkh.bef.value;
     processedStr = deleteIVS(str);
-    document.mto.aft.value = processedStr;
+    document.kkh.aft.value = processedStr;
 }
 
 function executeBasedOnCheckbox2(jisyo1, jisyo2, jisyo3, flag) {
-    var small_kana = document.forms.mto.small_kana_yes.checked;
+    var small_kana = document.forms.kkh.small_kana_yes.checked;
     if (small_kana === true) {//捨假名がオンのとき
         if (flag === 0) {//新から舊
             return replaceStrings3(jisyo1, jisyo2, jisyo3, flag);
@@ -49,7 +50,7 @@ function executeBasedOnCheckbox2(jisyo1, jisyo2, jisyo3, flag) {
 }
 
 function executeBasedOnCheckbox(jisyo1, jisyo2, flag) {
-    var small_kana = document.forms.mto.small_kana_yes.checked;
+    var small_kana = document.forms.kkh.small_kana_yes.checked;
     if (small_kana === true) {//捨假名がオンのとき
         if (flag === 0) {//新から舊
             return replaceStrings2(jisyo1, jisyo2, flag);
@@ -66,8 +67,8 @@ function executeBasedOnCheckbox(jisyo1, jisyo2, flag) {
 }
 
 function replaceStrings3(jisyo1, jisyo2, jisyo3, flag) {
-    var str = document.mto.bef.value;
-    var del_ivs = document.forms.mto.del_IVS_yes.checked
+    var str = document.kkh.bef.value;
+    var del_ivs = document.forms.kkh.del_IVS_yes.checked
     if (del_ivs == true) {
         str = deleteIVS(str);
     }
@@ -92,12 +93,12 @@ function replaceStrings3(jisyo1, jisyo2, jisyo3, flag) {
             str = gsub(str, jisyo3[i][1], jisyo3[i][0]);
         }
     } 
-    document.mto.aft.value = str;
+    document.kkh.aft.value = str;
 }
 
 function replaceStrings2(jisyo1, jisyo2, flag) {
-    var str = document.mto.bef.value;
-    var del_ivs = document.forms.mto.del_IVS_yes.checked
+    var str = document.kkh.bef.value;
+    var del_ivs = document.forms.kkh.del_IVS_yes.checked
     if (del_ivs == true) {
         str = deleteIVS(str);
     }
@@ -116,12 +117,12 @@ function replaceStrings2(jisyo1, jisyo2, flag) {
             str = gsub(str, jisyo2[i][1], jisyo2[i][0]);
         }
     }
-    document.mto.aft.value = str;
+    document.kkh.aft.value = str;
 }
 
 function replaceStrings(jisyo, flag) {
-    var str = document.mto.bef.value;
-    var del_ivs = document.forms.mto.del_IVS_yes.checked
+    var str = document.kkh.bef.value;
+    var del_ivs = document.forms.kkh.del_IVS_yes.checked
     if (del_ivs == true) {
         str = deleteIVS(str);
     }
@@ -134,7 +135,7 @@ function replaceStrings(jisyo, flag) {
             str = gsub(str, jisyo[i][1], jisyo[i][0]);
         }
     }
-    document.mto.aft.value = str;
+    document.kkh.aft.value = str;
 }
 
 function dictElements() {
@@ -154,19 +155,19 @@ function readFileInLocal() {
                               var reader = new FileReader();
                               reader.readAsText(file, 'UTF-8');
                               reader.onload = function(e) {
-                                  document.mto.bef.value = reader.result;
+                                  document.kkh.bef.value = reader.result;
                               }},
                           false);
 }
 
 // for mobile page
 function mDel() {
-    document.mto.tArea.value = "";
+    document.kkh.tArea.value = "";
 }
 
 function mReplaceStrings2(jisyo1, jisyo2, flag) {
-    var str = document.mto.tArea.value;
-    var del_ivs = document.forms.mto.del_IVS_yes.checked
+    var str = document.kkh.tArea.value;
+    var del_ivs = document.forms.kkh.del_IVS_yes.checked
     if (del_ivs == true) {
         str = deleteIVS(str);
     }
@@ -185,5 +186,5 @@ function mReplaceStrings2(jisyo1, jisyo2, flag) {
             str = gsub(str, jisyo2[i][1], jisyo2[i][0]);
         }
     }
-    document.mto.tArea.value = str;
+    document.kkh.tArea.value = str;
 }
