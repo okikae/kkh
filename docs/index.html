@@ -11,6 +11,8 @@
   <body>
     <script src="dic-kana.js"></script>
     <script src="dic-kanji.js"></script>
+    <script src="dic-small.js"></script>
+    <script src="dic-jion.js"></script><!--読み仮名辞書の追加。-->
 
     <noscript>
       <p>JavaScriptを有効にしないと使えません(&gt;_&lt;)</p>
@@ -35,27 +37,27 @@
           <input type="button"
                  value="旧文章→新文章"
                  class="bg_oldnew"
-                 onclick="replaceStrings2(kanjiArray, kanaArray, 1)" />
+                 onclick="executeBasedOnCheckbox2(kanjiArray, kanaArray, smallArray, 1)" />
           <input type="button"
                  value="新文章→旧文章"
                  class="bg_newold"
-                 onclick="replaceStrings2(kanaArray, kanjiArray, 0)" />
+                 onclick="executeBasedOnCheckbox2(smallArray, kanaArray, kanjiArray, 0)" />
         </div>
       </div>
 
       <br class="clear" />
 
       <div class="button-set">
-        かな変換:
+        仮名変換:
         <div class="button-pair">
           <input type="button"
-                 value="旧かな→新かな"
+                 value="旧仮名→新仮名"
                  class="bg_oldnew"
-                 onclick="replaceStrings(kanaArray, 1)" />
+                 onclick="executeBasedOnCheckbox(kanaArray, smallArray, 1)" />
           <input type="button"
-                 value="新かな→旧かな"
+                 value="新仮名→旧仮名"
                  class="bg_newold"
-                 onclick="replaceStrings(kanaArray, 0)" />
+                 onclick="executeBasedOnCheckbox(smallArray, kanaArray, 0)" />
         </div>
       </div>
 
@@ -78,8 +80,34 @@
       <br class="clear" />
 
       <div class="button-set">
-        <input type="checkbox" id="del_IVS_yes" />
-        <label for="del_IVS_yes">異体字セレクタを削除する</label></div>
+        字音仮名遣変換:
+          <input type="button"
+                 value="読み仮名(Beta)"
+                 class="bg_yomikana"
+                 onclick="replaceStrings2(kanaArray, jionArray, 0)" />
+      </div><!-- 字音仮名遣の読み仮名変換を追加しました。 -->
+
+      <br class="clear" />
+
+      <div class="button-set">
+        異体字セレクタ削除:
+        <input type="button"
+                 value="IVS削除"
+                 class="bg_yomikana"
+                 onclick="deleteIVS2()" />
+      </div>
+
+      <br class="clear" />
+
+      <div class="button-set">
+        <input type="checkbox" id="del_IVS_yes" checked/>
+        <label for="del_IVS_yes">文章から異体字セレクタを除去してから変換する</label></div>
+
+      <br class="clear" />
+
+            <div class="button-set">
+        <input type="checkbox" id="small_kana_yes"/>
+        <label for="small_kana_yes">拗促音を捨仮名にしない</label></div>
 
       <br class="clear" />
 
