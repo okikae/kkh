@@ -58,10 +58,7 @@ function dictElements() {
             "、新→旧: " + toTradKanaArray.length + "）<br />" +
             "（漢字: 旧→新: " + toNewKanjiArray.length +
             "、新→旧: " + toOldKanjiArray.length + "）<br />" +
-            "（拡張: 踊り字: " + odoriEnhanceArray.length + "）" +
-            "（拡張: 外来語: " + gairaiEnhanceArray.length + "）<br />" +
-            "（拡張: 合略仮名: " + gouryakuEnhanceArray.length + "）" +
-            "（拡張: ヤ行エ: " + yeEnhanceArray.length + "）</p>"
+            "</p>"
     );
 }
 

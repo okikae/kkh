@@ -2,7 +2,9 @@
 # vim:ts=4:
 # Author: 奈幾乃(uakms)
 # Created: 2024-12-13
-# Revised: 2024-12-17
+# Revised: 2025-08-10
+
+## 拡張変換用辞書は生成・利用しないことにした。[2025-08-10]
 
 ## 踊り字 (々) 同の字点 (U+3005)
 ## (縦書き)踊り字 (〻) 二の字点 (U+303B)
@@ -93,28 +95,28 @@ $TOOL -jr tmp | sed -e '1ivar toNewKanjiArray =' > docs/dic-to-new-kanji.js
 ### Enhance dictionary
 # 新かな->旧かな  "normal" 「踊り字」「字点」のみ
 # "var odoriEnhanceArray", "dic-odori-enhance.js"
-echo "export to docs/dic-odori-enhance.js"
-sed -e '/踊り字/!s/^/;/g' kana-jisyo > tmp
-sed -e '/字点/!s/^/;/g' kanji-jisyo >> tmp
-$TOOL -jn tmp | sed -e '1ivar odoriEnhanceArray =' > docs/dic-odori-enhance.js
+#echo "export to docs/dic-odori-enhance.js"
+#sed -e '/踊り字/!s/^/;/g' kana-jisyo > tmp
+#sed -e '/字点/!s/^/;/g' kanji-jisyo >> tmp
+#$TOOL -jn tmp | sed -e '1ivar odoriEnhanceArray =' > docs/dic-odori-enhance.js
 
 # 新かな->旧かな  "normal" 「外来語」のみ
 # "var gairaiEnhanceArray", "dic-gairai-enhance.js"
-echo "export to docs/dic-gairai-enhance.js"
-sed -e '/外来語/!s/^/;/g' kana-jisyo > tmp
-$TOOL -jn tmp | sed -e '1ivar gairaiEnhanceArray =' > docs/dic-gairai-enhance.js
+#echo "export to docs/dic-gairai-enhance.js"
+#sed -e '/外来語/!s/^/;/g' kana-jisyo > tmp
+#$TOOL -jn tmp | sed -e '1ivar gairaiEnhanceArray =' > docs/dic-gairai-enhance.js
 
 # 新かな->旧かな  "normal" 「合略仮名」のみ
 # "var gouryakuEnhanceArray", "dic-gouryaku-enhance.js"
-echo "export to docs/dic-gouryaku-enhance.js"
-sed -e '/合略仮名/!s/^/;/g' kana-jisyo > tmp
-$TOOL -jn tmp | sed -e '1ivar gouryakuEnhanceArray =' > docs/dic-gouryaku-enhance.js
+#echo "export to docs/dic-gouryaku-enhance.js"
+#sed -e '/合略仮名/!s/^/;/g' kana-jisyo > tmp
+#$TOOL -jn tmp | sed -e '1ivar gouryakuEnhanceArray =' > docs/dic-gouryaku-enhance.js
 
 # 新かな->旧かな  "normal" 「ヤ行エ」のみ
 # "var yeEnhanceArray", "dic-ye-enhance.js"
-echo "export to docs/dic-ye-enhance.js"
-sed -e '/ヤ行エ/!s/^/;/g' kana-jisyo > tmp
-$TOOL -jn tmp | sed -e '1ivar yeEnhanceArray =' > docs/dic-ye-enhance.js
+#echo "export to docs/dic-ye-enhance.js"
+#sed -e '/ヤ行エ/!s/^/;/g' kana-jisyo > tmp
+#$TOOL -jn tmp | sed -e '1ivar yeEnhanceArray =' > docs/dic-ye-enhance.js
 
 # お掃除
 rm tmp
