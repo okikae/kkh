@@ -29,7 +29,7 @@ div.button-pair {
 }
 
 textarea {
-    font-family: "Hiragino Maru Gothic ProN", Osaka, sans-serif, Jigmo2;
+    font-family: "Hiragino Maru Gothic ProN", Osaka, "Noto Serif JP", "Noto Serif Hentaigana",sans-serif, Jigmo2;
     font-size: 1.1rem;
     border: 2px solid lightgray;
     border-radius: 0.5rem 0.5rem;
