@@ -188,3 +188,90 @@ function mReplaceStrings2(jisyo1, jisyo2, flag) {
     }
     document.kkh.tArea.value = str;
 }
+
+function aozoraToRuby(text) {
+    if (!text) return "";
+
+    let processedText = text.trim();
+
+    // 1. 漢字（BMP/拡張）または サロゲートペア（補助漢字）
+    const kanji = '(?:[\\u4E00-\\u9FFF\\u3400-\\u4DBF\\uF900-\\uFAFF]|[\\uD800-\\uDBFF][\\uDC00-\\uDFFF])';
+    // 2. 異体字セレクタ（IVS） ※任意なので末尾に ? を付与
+    const ivs   = '(?:\\uDB40[\\uDD00-\\uDDEF])?';
+    
+    // 【重要】ここで全体を括弧 ( ) で囲むことで、+ が「漢字+IVS」のセットにかかるようにします
+    const char1 = '(?:' + kanji + ivs + ')';
+
+    // 1. ｜ルビ
+    processedText = processedText.replace(/[｜|]([^《\n]+)《([^》\n]+)》/g, '<ruby>$1<rt>$2</rt></ruby>');
+
+    // 2. 漢字（IVS対応）《ルビ》
+    // char1 全体を繰り返すように修正
+    processedText = processedText.replace(
+        new RegExp('(' + char1 + '+)《([^》\\n]+)》', 'g'),
+        '<ruby>$1<rt>$2</rt></ruby>'
+    );
+
+    // 3. 直前の1文字（IVS対応）
+    processedText = processedText.replace(
+        new RegExp('(' + char1 + '|[^｜|》\\n])《([^》\\n]+)》', 'g'),
+        '<ruby>$1<rt>$2</rt></ruby>'
+    );
+
+    return processedText;
+}
+
+
+
+function syncPreviewHeight() {
+    const ta = document.querySelector('textarea[name="aft"]');
+    const preview = document.getElementById('aft_html_tab');
+    
+    // textareaがまだ表示されているうちに高さを取得して保存
+    if (ta.offsetHeight > 0) {
+        preview.style.height = ta.offsetHeight + "px";
+    }
+}
+
+function updateHtmlPreview() {
+    const text = document.kkh.aft.value;
+    const html = aozoraToRuby(text);
+    const content = document.getElementById("aft_html_content");
+    if (content) {
+        content.innerHTML = html;
+    }
+    // 表示されている時だけ同期
+    if (document.getElementById("aft_html_tab").style.display !== "none") {
+        syncPreviewHeight();
+    }
+}
+
+function showAftTab(mode) {
+    const textTab = document.getElementById("aft_text_tab"); // textarea本体
+    const htmlTab = document.getElementById("aft_html_tab");
+    const content = document.getElementById("aft_html_content");
+
+    if (mode === "text") {
+        htmlTab.style.display = "none";
+        textTab.style.display = "inline-block"; // blockではなくinline-block
+    } else {
+        // 1. 内容更新
+        content.innerHTML = aozoraToRuby(textTab.value);
+
+        // 2. まだ表示されていない時だけ切り替え
+        if (htmlTab.style.display !== "inline-block") {
+            // 現在の正確な高さを取得
+            const targetHeight = textTab.offsetHeight;
+            
+            // 切り替え
+            textTab.style.display = "none";
+            htmlTab.style.display = "inline-block";
+
+            // 高さだけを同期（幅はCSSに任せる）
+            htmlTab.style.height = targetHeight + "px";
+        }
+    }
+}
+
+
+

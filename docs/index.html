@@ -22,14 +22,29 @@
       <div class="set">
         <p class="set-title">変換前の文章</p>
         <textarea name="bef"></textarea>
-        <input type="button" value="内容を消去" onclick="del();" /></div>
+        <input type="button" 
+               value="内容を消去" 
+               onclick="del();" /></div>
 
       <div class="set">
         <p class="set-title">変換後の文章</p>
-        <textarea name="aft"></textarea>
-        <input type="button"
-               value="結果を入力へ"
-               onclick="toBeforeTextArea()" /></div>
+
+        <textarea name="aft" id="aft_text_tab"></textarea>
+
+        <div id="aft_html_tab"><div id="aft_html_content"></div></div>
+
+          <input type="button"
+                 value="結果を入力へ"
+                 onclick="toBeforeTextArea()" />
+          <input type="button"
+                 value="テキスト"
+                 onclick="showAftTab('text')" />
+          <input type="button"
+                 value="HTMLプレビュー"
+                 onclick="showAftTab('html')" /></div>
+        </div>
+
+      <br class="clear" />
 
       <div class="button-set">
         一括変換:

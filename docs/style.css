@@ -28,15 +28,26 @@ div.button-pair {
     white-space: nowrap;
 }
 
-textarea {
-    font-family: "Hiragino Maru Gothic ProN", Osaka, "Noto Serif JP", "Noto Serif Hentaigana",sans-serif, Jigmo2;
+textarea, #aft_html_tab {
+    font-family: "Hiragino Maru Gothic ProN", Osaka, "Noto Serif JP", "Noto Serif Hentaigana",sans-serif, "Jigmo", "Jigmo2";
     font-size: 1.1rem;
     border: 2px solid lightgray;
     border-radius: 0.5rem 0.5rem;
-    width: 92%;
+    width: 94%;
     aspect-ratio: 2/1;
     height: auto;
+    box-sizing: border-box;
+    display: inline-block; 
+    padding: 8px;
 }
+
+#aft_html_tab {
+    overflow-y: auto;
+    white-space: pre-wrap;
+    text-align: left;
+    display: none;
+}
+
 
 div.set {
     float: left;
@@ -47,7 +58,7 @@ div.set {
 }
 
 @media screen and (min-width: 481px) {
-    textarea {aspect-ratio: 1/1;}
+    textarea, #aft_html_tab {aspect-ratio: 1/1;}
 
     div.set {
         float: left;
