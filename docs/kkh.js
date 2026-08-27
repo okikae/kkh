@@ -1,6 +1,6 @@
-// Author: nakinor
+// Author: kkh members
 // Created: 2014-04-06
-// Revised: 2024-12-01
+// Revised: 2026-08-27
 //2025-07-30 kkh-Ver.2.0.0拗促音を小書きにする設定の追加。読み仮名変換、IVS削除変換の機能追加。
 
 function gsub(str, key, val) {
@@ -158,6 +158,30 @@ function readFileInLocal() {
                                   document.kkh.bef.value = reader.result;
                               }},
                           false);
+}
+
+// 2 つのテキストエリアを同期的にスクロールさせる
+function syncScroll(source, target) {
+    var sourceMaxScroll = source.scrollHeight - source.clientHeight;
+    var targetMaxScroll = target.scrollHeight - target.clientHeight;
+
+    if (sourceMaxScroll <= 0) return;
+
+    var scrollRatio = source.scrollTop / sourceMaxScroll;
+    target.scrollTop = scrollRatio * targetMaxScroll;
+}
+
+function listenSyncScroll() {
+    var bef = document.kkh.bef;
+    var aft = document.kkh.aft;
+
+    bef.addEventListener("scroll", () => {
+        syncScroll(bef, aft);
+    });
+
+    aft.addEventListener("scroll", () => {
+        syncScroll(aft, bef);
+    });
 }
 
 // for mobile page
