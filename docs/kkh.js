@@ -1,6 +1,6 @@
 // Author: nakinor
 // Created: 2014-04-06
-// Revised: 2024-12-01
+// Revised: 2026-08-27
 //2025-07-30 kkh-Ver.2.0.0拗促音を小書きにする設定の追加。読み仮名変換、IVS削除変換の機能追加。
 
 function gsub(str, key, val) {
@@ -148,16 +148,31 @@ function dictElements() {
 }
 
 function readFileInLocal() {
-    document.getElementById('ifile')
-        .addEventListener('change',
-                          function(evt) {
-                              var file = evt.target.files[0];
-                              var reader = new FileReader();
-                              reader.readAsText(file, 'UTF-8');
-                              reader.onload = function(e) {
-                                  document.kkh.bef.value = reader.result;
-                              }},
-                          false);
+    document.getElementById("ifile").addEventListener(
+        "change",
+        function(evt) {
+            var file = evt.target.files[0];
+            var reader = new FileReader();
+            reader.readAsText(file, "UTF-8");
+            reader.onload = function(e) {
+                document.kkh.bef.value = reader.result;
+            }},
+        false);
+}
+
+function saveAfterStrings() {
+    document.getElementById("ofile").addEventListener(
+        "click",
+        function () {
+            var Stfings = document.kkh.aft.value;
+            var blob = new Blob([Stfings], { type: "text/plain" });
+            var dlAnchor = document.createElement("a");
+            dlAnchor.href = URL.createObjectURL(blob);
+            dlAnchor.download = "replaced.txt";
+            dlAnchor.click();
+            URL.revokeObjectURL(dlAnchor.href);
+        },
+        false);
 }
 
 // for mobile page
